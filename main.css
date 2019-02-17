@@ -1,0 +1,44 @@
+body {
+  margin: 20px 50px;
+  font: 15px arial, sans-serif;
+}
+
+.note {
+  height: 100px;
+  width: calc(25% - 20px);
+  margin: 0 20px 20px 0;
+  float: left;
+  text-align: center;
+  padding-top: 10px;
+  background-color: blanchedalmond;
+  position: relative;
+  border-radius: 10px;
+}
+
+textarea {
+  font: 15px arial, sans-serif;
+  width: calc(100% - 20px);
+  padding: 12px 14px;
+  outline: none;
+}
+
+.btn {
+  font: bold 15px arial, sans-serif;
+  color: white;
+  background: #0066a2;
+  padding: 10px 15px;
+  border-radius: 10px;
+  border: none;
+  margin: 15px 0;
+  outline: none;
+  cursor: pointer;
+}
+
+.btn-delete {
+  border-radius: 50%;
+  background-color: red;
+  position: absolute;
+  top: 0;
+  right: 15px;
+  padding: 2px 6px;
+}
