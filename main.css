@@ -9,15 +9,15 @@ body {
   margin: 0 20px 20px 0;
   float: left;
   text-align: center;
-  padding-top: 10px;
-  background-color: blanchedalmond;
+  padding-top: 15px;
+  background-color: #e6e6e6;
   position: relative;
   border-radius: 10px;
 }
 
 textarea {
   font: 15px arial, sans-serif;
-  width: calc(100% - 20px);
+  width: calc(100% - 55px);
   padding: 12px 14px;
   outline: none;
 }
@@ -36,9 +36,9 @@ textarea {
 
 .btn-delete {
   border-radius: 50%;
-  background-color: red;
+  background-color: #ff6666;
   position: absolute;
   top: 0;
-  right: 15px;
+  right: 16px;
   padding: 2px 6px;
 }

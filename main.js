@@ -1,13 +1,14 @@
-var notes = ['nota 1', 'nota 2', 'nota 3', 'nota 4', 'nota 5'];
-// var notes = [];
+var notes = [];
 var colos = ['blue', 'yellow', 'red'];
 
-window.onload = function() {
-  addButtonNewnote();
+window.onload = function () {
+  addButtonNewNote();
 
-  notes.map((note) => {
-    addNote(note);
-  });
+  for (let index = 10; index > 0; index--) {
+    notes.push(`note ${index}`);
+  }
+
+  addNote();
 };
 
 function newNote(params) {
@@ -26,7 +27,10 @@ function newNote(params) {
 function createNote() {
   const newNote = document.getElementById('text-note').value;
 
-  if (!newNote) return;
+  if (!newNote) {
+    alert('Informe o texto da nota para criá-la.')
+    return;
+  }
 
   document.getElementById('text-note').value = '';
 
@@ -35,7 +39,7 @@ function createNote() {
 
   addNote(newNote);
 
-  addButtonNewnote();
+  addButtonNewNote();
 }
 
 function removeField(field) {
@@ -46,18 +50,34 @@ function addHTML(name, html) {
   document.getElementById(name).innerHTML += html;
 }
 
-function addButtonNewnote() {
+function addButtonNewNote() {
   addHTML(
     'create-note',
-    '<input type="button" class="btn" id="nova-nota" onclick="newNote()" value="Nova Nota"></input>'
+    '<input type="button" class="btn" id="nova-nota" onclick="newNote()" value="Nova Nota">'
   );
 }
 
 function addNote(note) {
-  addHTML(
-    'panel-notes',
-    '<div class="note">' +
-      note +
-      '<input type="button" class="btn btn-delete" id="clear-nota" onclick="clearNote()" value="X"></input><div/>'
-  );
+  if (note) {
+    notes.push(note);
+  }
+
+  const elements = document.getElementsByClassName("note");
+
+  while (elements.length > 0) {
+    elements[0].parentNode.removeChild(elements[0]);
+  }
+
+  notes.forEach((note, index) => {
+    addHTML('panel-notes',
+      `<div class="note">
+      ${note}
+      <input type="button" class="btn btn-delete" id="delete-nota" onclick="deleteNote(${index})" value="X">
+    <div/>`)
+  });
+}
+
+function deleteNote(index) {
+  notes.splice(index, 1);
+  addNote();
 }
