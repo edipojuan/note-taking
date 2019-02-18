@@ -1,26 +1,38 @@
 var notes = [];
-var colos = ['blue', 'yellow', 'red'];
+var colos = ['#e6ffff', '#fff2e6', '#ebfaeb'];
 
 window.onload = function () {
   addButtonNewNote();
 
   for (let index = 10; index > 0; index--) {
-    notes.push(`note ${index}`);
+    notes.push({
+      content: `note ${index}`,
+      color: index % 2 === 0 ? '#e6ffff' : '#fff2e6'
+    });
   }
 
-  addNote();
+  addAllNotes();
 };
 
 function newNote(params) {
   removeField('nova-nota');
 
+  colos.forEach(color => {
+    addHTML('create-note', `
+      <div class="radio" style="background-color: ${color}">
+        <input type="radio" name="colors" value="${color}">
+      </div>
+    `)
+  });
+
   addHTML(
     'create-note',
     '<textarea id="text-note" cols="30" rows="4"></textarea>'
   );
+
   addHTML(
     'create-note',
-    '<input type="button" class="btn" id="create-note-btn" onclick="return createNote()" value="Criar Nota">'
+    '<input type="button" class="btn" id="create-note-btn" onclick="createNote()" value="Criar Nota">'
   );
 }
 
@@ -57,27 +69,55 @@ function addButtonNewNote() {
   );
 }
 
-function addNote(note) {
-  if (note) {
-    notes.push(note);
+function addNote(content) {
+  if (content) {
+    const color = getColor();
+    notes = [...notes, {
+      content,
+      color
+    }];
   }
 
-  const elements = document.getElementsByClassName("note");
+  addAllNotes();
+}
 
-  while (elements.length > 0) {
-    elements[0].parentNode.removeChild(elements[0]);
-  }
+function addAllNotes() {
+  deleteAllByClassName("note");
 
   notes.forEach((note, index) => {
     addHTML('panel-notes',
-      `<div class="note">
-      ${note}
+      `<div class="note" style="background-color: ${note.color}">
+      ${note.content}
       <input type="button" class="btn btn-delete" id="delete-nota" onclick="deleteNote(${index})" value="X">
     <div/>`)
   });
 }
 
+function getColor() {
+  const radios = document.getElementsByName('colors');
+
+  let color = '#e6e6e6';
+
+  for (var i = 0; i < radios.length; i++) {
+    if (radios[i].checked) {
+      color = radios[i].value;
+      break;
+    }
+  }
+
+  deleteAllByClassName("radio");
+
+  return color;
+}
+
+function deleteAllByClassName(className) {
+  const elements = document.getElementsByClassName(className);
+  while (elements.length > 0) {
+    elements[0].parentNode.removeChild(elements[0]);
+  }
+}
+
 function deleteNote(index) {
   notes.splice(index, 1);
-  addNote();
+  addAllNotes();
 }
